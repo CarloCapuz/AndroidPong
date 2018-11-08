@@ -8,16 +8,15 @@ import java.util.Random;
 
 public class Ball {
 
+    private final float minSpeed = 0.045f;
+    private final float maxSpeed = 0.06f;
+
     private float r, x, y, speed;
     private float velX, velY, ratioX, ratioY;
 
     private Paint paint;
 
-    Random random = new Random();
-
-    side hit = side.None;
-
-    public enum side { None, Left, Right, Top, Bottom }
+    private Random random = new Random();
 
     public Ball(float r, float x, float y) {
         this.r = r;
@@ -25,7 +24,7 @@ public class Ball {
         this.y = y;
         this.velX = 1f;
         this.velY = 1f;
-        this.speed = 0.01f;
+        this.speed = minSpeed;
         paint = new Paint();
         paint.setColor(0xFF000000); //Start off as black
         paint.setStyle(Paint.Style.FILL);
@@ -37,7 +36,8 @@ public class Ball {
         canvas.drawCircle(canvas.getWidth()*x,canvas.getHeight()*y,canvas.getWidth()*r,paint);
     }
 
-    public void tick(Canvas canvas) {
+    public int tick(Canvas canvas, Paddle player, Paddle enemy) {
+        int status = 0;
         float prevX = x;
         float prevY = y;
         x += velX;
@@ -46,20 +46,25 @@ public class Ball {
         float xneg_bound = x - r;
         float ypos_bound = y + r;
         float yneg_bound = y - r;
-
-        if (ypos_bound >= 1 || yneg_bound <= 0) {
+        if (player.doesBallClipPaddle(this) || enemy.doesBallClipPaddle(this)) {
             y = prevY;
-            hitY();
-            hit = (ypos_bound >= 1) ? side.Top : side.Bottom;
-        }
-
-        if (xpos_bound >= 1 || xneg_bound <= 0) {
             x = prevX;
             hitX();
-            hit = (xpos_bound >= 1) ? side.Right : side.Left;
-            paint.setColor((xpos_bound >= 1) ? 0xFF0000FF : 0xFFFF0000); //Red ball if hits left side, blue ball if hits right side
+        } else {
+            if (ypos_bound >= 1 || yneg_bound <= 0) {
+                y = prevY;
+                x = prevX;
+                hitY();
+            }
+            if (xpos_bound >= 1 || xneg_bound <= 0) {
+                x = prevX;
+                y = prevY;
+                hitX();
+                paint.setColor((xpos_bound >= 1) ? 0xFF0000FF : 0xFFFF0000); //Red ball if hits left side, blue ball if hits right side
+                status = (xpos_bound >= 1) ? 2 : 1; // 1 = red point, 2 = blue point
+            }
         }
-
+        return status;
     }
 
     private void hitX() {
@@ -73,6 +78,29 @@ public class Ball {
         velY = (velY > 0) ? -(speed*ratioY) : (speed*ratioY);
     }
 
+    public float getX() {
+        return this.x;
+    }
 
+    public float getY() {
+        return this.y;
+    }
+
+    public float getRadius() {
+        return r;
+    }
+
+    public void reset() {
+        this.x = 0.5f;
+        this.y = 0.5f;
+        this.velX = 1f;
+        this.velY = 1f;
+        this.speed = minSpeed;
+        paint.setColor(0xFF000000);
+    }
+
+    public void setLevel(int level, int maxLevel) {
+        this.speed = GameBoard.lerp(minSpeed, maxSpeed, (float)level/(float)maxLevel);
+    }
 
 }

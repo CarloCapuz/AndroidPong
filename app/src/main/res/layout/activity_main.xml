@@ -7,9 +7,9 @@
     tools:context=".MainActivity">
 
     <com.example.it_lab_local.androidpong.GameBoard
-        android:id="@+id/board"
+        android:id="@+id/gameboard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="422dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
