@@ -1,4 +1,4 @@
-package com.example.it_lab_local.androidpong;
+package com.example.elilo.myapplication;
 
 import org.junit.Test;
 

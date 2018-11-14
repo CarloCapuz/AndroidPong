@@ -1,4 +1,4 @@
-package com.example.it_lab_local.androidpong;
+package com.example.elilo.myapplication;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Ball {
 
-    private final float minSpeed = 0.045f;
-    private final float maxSpeed = 0.06f;
+    private final float minSpeed = 0.015f;
+    private final float maxSpeed = 0.04f;
 
     private float r, x, y, speed;
     private float velX, velY, ratioX, ratioY;
@@ -36,7 +36,7 @@ public class Ball {
         canvas.drawCircle(canvas.getWidth()*x,canvas.getHeight()*y,canvas.getWidth()*r,paint);
     }
 
-    public int tick(Canvas canvas, Paddle player, Paddle enemy) {
+    public int tick(Canvas canvas, Paddle player, Paddle enemy, boolean canHit) {
         int status = 0;
         float prevX = x;
         float prevY = y;
@@ -60,8 +60,8 @@ public class Ball {
                 x = prevX;
                 y = prevY;
                 hitX();
-                paint.setColor((xpos_bound >= 1) ? 0xFF0000FF : 0xFFFF0000); //Red ball if hits left side, blue ball if hits right side
-                status = (xpos_bound >= 1) ? 2 : 1; // 1 = red point, 2 = blue point
+                paint.setColor((canHit) ? ((xpos_bound >= 1) ? 0xFF0000FF : 0xFFFF0000) : paint.getColor()); //Red ball if hits left side, blue ball if hits right side
+                status = (canHit) ? ((xpos_bound >= 1) ? 2 : 1) : 0; // 1 = red point, 2 = blue point
             }
         }
         return status;

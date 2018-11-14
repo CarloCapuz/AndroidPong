@@ -1,5 +1,4 @@
-package com.example.it_lab_local.androidpong;
-
+package com.example.elilo.myapplication;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -25,10 +24,10 @@ public class GameBoard extends View {
 
     private final Handler handler = new Handler();
 
-    private final int winningPoint = 11;
+    private final int winningPoint = 12;
 
-    private int playerScore, enemyScore;
-
+    private int playerScore, enemyScore, level;
+    private int tick = 0;
     private Paddle player, enemy;
     private Ball ball;
     private Paint paint;
@@ -39,10 +38,11 @@ public class GameBoard extends View {
     private final GameBoard instance;
 
     private boolean running = false;
-    private int level;
+    private boolean resetDebounce = false;
 
     private Timer timer = new Timer(false);
 
+    private OnGameStateChangeListener listener;
 
     @SuppressLint("ClickableViewAccessibility")
     public GameBoard(Context context, AttributeSet attribs) {
@@ -84,33 +84,40 @@ public class GameBoard extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        tick++;
         super.onDraw(canvas);
         ball.draw(canvas);
         player.draw(canvas);
         enemy.draw(canvas);
         if (!running) return;
-        int result = ball.tick(canvas, player, enemy);
+        int result = ball.tick(canvas, player, enemy,  (tick >= 300));
         if (result == 1) {
             enemyScore++;
             increaseLevel();
+            fireListener();
         } else if (result == 2) {
             playerScore++;
             increaseLevel();
+            fireListener();
         }
         if (playerScore >= winningPoint) {
+            running = false;
             Toast toast = Toast.makeText(getContext(), "Blue wins!",Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP,0,0);
             toast.show();
-            reset();
+            fireListener();
         } else if (enemyScore >= winningPoint) {
+            running = false;
             Toast toast = Toast.makeText(getContext(), "Red wins!",Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP,0,0);
             toast.show();
-            reset();
+            fireListener();
         }
     }
 
     public void reset() {
+        if (resetDebounce) return;
+        resetDebounce = true;
         running = false;
         TimerTask task1 = new TimerTask() {
             @Override
@@ -121,9 +128,11 @@ public class GameBoard extends View {
                         playerScore = 0;
                         enemyScore = 0;
                         level = 0;
+                        tick = 0;
                         ball.reset();
                         player.reset();
                         enemy.reset();
+                        fireListener();
                         Toast toast = Toast.makeText(getContext(), "Game starting....",Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.TOP,0,0);
                         toast.show();
@@ -134,6 +143,8 @@ public class GameBoard extends View {
                                     @Override
                                     public void run() {
                                         running = true;
+                                        resetDebounce = false;
+                                        fireListener();
                                     }
                                 });
                             }
@@ -151,6 +162,7 @@ public class GameBoard extends View {
         ball.setLevel(level, winningPoint);
         player.setLevel(level, winningPoint);
         enemy.setLevel(level, winningPoint);
+        fireListener();
     }
 
     public int getPlayerScore() {
@@ -169,5 +181,15 @@ public class GameBoard extends View {
     {
         return (a * (1.0f - f)) + (b * f);
     }
+
+    private void fireListener() {
+        if (listener != null) listener.OnGameStateChanged(level, playerScore, enemyScore, running);
+    }
+
+    public void setOnGameStateChangeListener(OnGameStateChangeListener listener) {
+        this.listener = listener;
+    }
+
+
 }
 

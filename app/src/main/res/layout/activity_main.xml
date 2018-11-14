@@ -4,26 +4,234 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
 
-    <com.example.it_lab_local.androidpong.GameBoard
-        android:id="@+id/gameboard"
-        android:layout_width="match_parent"
-        android:layout_height="422dp"
+
+    <Button
+
+        android:id="@+id/buttonReset"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:padding="5dp"
+
+        android:layout_marginEnd="22dp"
+
+        android:layout_marginRight="22dp"
+
+        android:fontFamily="@font/joystixmonospace"
+
+        android:text="START"
+
+        android:textColor="@color/black"
+
+        android:textSize="12sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toStartOf="@+id/textViewAiScoreBox"
+
+        app:layout_constraintStart_toEndOf="@+id/textViewPlayerScoreBox" />
+
+
+
+    <TextView
+
+        android:id="@+id/textViewPlayerScore"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="16dp"
+
+        android:layout_marginStart="16dp"
+
+        android:fontFamily="@font/joystixmonospace"
+
+        android:text="PLAYER SCORE"
+
+        android:textColor="@color/blue"
+
+        android:textSize="12sp"
+
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    <TextView
+
+        android:id="@+id/textViewAiScore"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="17dp"
+
+        android:layout_marginEnd="16dp"
+
+        android:layout_marginRight="16dp"
+
+        android:fontFamily="@font/joystixmonospace"
+
+        android:text="AI SCORE"
+
+        android:textAlignment="center"
+
+        android:textColor="@color/red"
+
+        app:layout_constraintBottom_toTopOf="@+id/textViewAiScoreBox"
+
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+    <TextView
+
+        android:id="@+id/textViewPlayerScoreBox"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="14dp"
+
+        android:layout_marginEnd="20dp"
+
+        android:layout_marginLeft="4dp"
+
+        android:layout_marginRight="20dp"
+
+        android:layout_marginStart="4dp"
+
+        android:fontFamily="@font/joystixmonospace"
+
+        android:text="0"
+
+        android:textAlignment="center"
+
+        android:textColor="@color/blue"
+
+        android:textSize="30sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toStartOf="@+id/buttonReset"
+
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    <TextView
+
+        android:id="@+id/textViewAiScoreBox"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="15dp"
+
+        android:fontFamily="@font/joystixmonospace"
+
+        android:text="0"
+
+        android:textAlignment="center"
+
+        android:textColor="@color/red"
+
+        android:textSize="30sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toEndOf="@+id/buttonReset" />
+
+
+
+    <TextView
+
+        android:id="@+id/textView"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:text="LEVEL: "
+
+        android:textColor="@color/black"
+
+        android:textSize="14sp"
+
+        app:fontFamily="@font/joystixmonospace"
+
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewSpeed"
+
+        app:layout_constraintStart_toStartOf="@+id/buttonReset" />
+
+
+
+    <TextView
+
+        android:id="@+id/textViewSpeed"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="14dp"
+
+        android:layout_marginEnd="14dp"
+
+        android:layout_marginRight="14dp"
+
+        android:fontFamily="@font/joystixmonospace"
+
+        android:text="0"
+
+        android:textAlignment="center"
+
+        android:textColor="@color/black"
+
+        android:textSize="14sp"
+
+        app:layout_constraintBottom_toTopOf="@+id/buttonReset"
+
+        app:layout_constraintEnd_toEndOf="@+id/buttonReset" />
+
+
+
+    <com.example.elilo.myapplication.GameBoard
+
+        android:id="@+id/board"
+
+        android:layout_width="0dp"
+
+        android:layout_height="450dp"
+
+        android:layout_marginEnd="3dp"
+
+        android:layout_marginLeft="3dp"
+
+        android:layout_marginRight="3dp"
+
+        android:layout_marginStart="3dp"
+
+        android:layout_marginTop="2dp"
+
+        android:orientation="vertical"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.it_lab_local.androidpong;
+package com.example.elilo.myapplication;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.it_lab_local.androidpong", appContext.getPackageName());
+        assertEquals("com.example.elilo.myapplication", appContext.getPackageName());
     }
 }
