@@ -155,7 +155,6 @@
         app:layout_constraintStart_toEndOf="@+id/buttonReset" />
 
 
-
     <TextView
 
         android:id="@+id/textView"
@@ -164,7 +163,7 @@
 
         android:layout_height="wrap_content"
 
-        android:text="LEVEL: "
+        android:text="LEVEL"
 
         android:textColor="@color/black"
 
@@ -177,7 +176,6 @@
         app:layout_constraintStart_toStartOf="@+id/buttonReset" />
 
 
-
     <TextView
 
         android:id="@+id/textViewSpeed"
@@ -186,11 +184,7 @@
 
         android:layout_height="wrap_content"
 
-        android:layout_marginBottom="14dp"
-
-        android:layout_marginEnd="14dp"
-
-        android:layout_marginRight="14dp"
+        android:layout_marginBottom="12dp"
 
         android:fontFamily="@font/joystixmonospace"
 
@@ -214,7 +208,7 @@
 
         android:layout_width="0dp"
 
-        android:layout_height="450dp"
+        android:layout_height="0dp"
 
         android:layout_marginEnd="3dp"
 
@@ -227,6 +221,8 @@
         android:layout_marginTop="2dp"
 
         android:orientation="vertical"
+
+        app:layout_constraintHeight_percent="0.83"
 
         app:layout_constraintEnd_toEndOf="parent"
 

@@ -47,6 +47,9 @@ public class GameBoard extends View {
     @SuppressLint("ClickableViewAccessibility")
     public GameBoard(Context context, AttributeSet attribs) {
         super(context, attribs);
+        paint = new Paint();
+        paint.setColor(0xFF000000);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         instance = this;
         ball = new Ball(0.02f,0.5f,0.5f);
         player = new Paddle(0.005f, 0xFF0000FF);
@@ -89,8 +92,17 @@ public class GameBoard extends View {
         ball.draw(canvas);
         player.draw(canvas);
         enemy.draw(canvas);
+        drawBorder(canvas);
         if (!running) return;
-        int result = ball.tick(canvas, player, enemy,  (tick >= 300));
+        if (!enemy.isMoving() && ball.getX() >= 0.3f) {
+            enemy.setAITarget(ball.getY());
+        }
+        if (tick % 50 == 0 && ball.getX() <= 0.3f) {
+            enemy.recalcError();
+        }
+        enemy.aiTick();
+        int result = ball.tick(canvas, player, enemy,  (tick >= 400));
+
         if (result == 1) {
             enemyScore++;
             increaseLevel();
@@ -113,6 +125,11 @@ public class GameBoard extends View {
             toast.show();
             fireListener();
         }
+    }
+
+    private void drawBorder(Canvas canvas) {
+        canvas.drawLine(0, canvas.getHeight()-1, canvas.getWidth(), canvas.getHeight()-1, paint);
+
     }
 
     public void reset() {
@@ -149,12 +166,12 @@ public class GameBoard extends View {
                                 });
                             }
                         };
-                        timer.schedule(task2, 5000);
+                        timer.schedule(task2, 3000);
                     }
                 });
             }
         };
-        timer.schedule(task1, 3000);
+        timer.schedule(task1, 1000);
     }
 
     private void increaseLevel() {
@@ -162,6 +179,7 @@ public class GameBoard extends View {
         ball.setLevel(level, winningPoint);
         player.setLevel(level, winningPoint);
         enemy.setLevel(level, winningPoint);
+        enemy.setAIMaxSPeed(ball.getSpeed()*0.75f);
         fireListener();
     }
 

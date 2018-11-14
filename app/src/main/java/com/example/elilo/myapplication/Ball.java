@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Ball {
 
-    private final float minSpeed = 0.015f;
-    private final float maxSpeed = 0.04f;
+    private final float minSpeed = 0.01f;
+    private final float maxSpeed = 0.035f;
 
     private float r, x, y, speed;
     private float velX, velY, ratioX, ratioY;
@@ -89,6 +89,8 @@ public class Ball {
     public float getRadius() {
         return r;
     }
+
+    public float getSpeed() { return speed; }
 
     public void reset() {
         this.x = 0.5f;
